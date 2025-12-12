@@ -2,3 +2,8 @@ main ul.tasks__list {
   width: 50%;
   margin: auto;
 }
+.tasks__item__toggle--completed {
+  text-decoration: line-through;
+  color: gray;              /* text color */
+  background-color: #e0e0e0; /* subtle background */
+}
