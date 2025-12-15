@@ -18,9 +18,9 @@ const TASKS = [
 const App = () => {
   const [tasks, setTasks] = useState(TASKS);
   
-  const toggleTaskComplete = (taskID) => {
+  const toggleTaskComplete = (taskId) => {
     const updatedTasks = tasks.map((task) => {
-      if (task.id === taksId) {
+      if (task.id === taskId) {
         return {...task, isComplete: !task.isComplete };
       }
       return task;
