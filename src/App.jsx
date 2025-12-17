@@ -17,19 +17,21 @@ const TASKS = [
 
 const App = () => {
   const [tasks, setTasks] = useState(TASKS);
-  
-  const toggleTaskComplete = (taskId) => {
-    const updatedTasks = tasks.map((task) => {
-      if (task.id === taskId) {
-        return {...task, isComplete: !task.isComplete };
-      }
-      return task;
-    });
-    setTasks(updatedTasks);
-  };
+  // use this way below
 
+  const toggleTaskComplete = (taskId) => {
+    setTasks((tasks) => (
+      tasks.map((task) => {
+        if (task.id === taskId) {
+          return { ...task, isComplete: !task.isComplete };
+        }
+        return task;
+      })
+    ))
+  };
+//  reorganize - functional set state or callback style 
   const deleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !==taskId);
+    const updatedTasks = tasks.filter((task) => task.id !== taskId);
     setTasks(updatedTasks);
   };
 
@@ -39,10 +41,10 @@ const App = () => {
         <h1>Ada&apos;s Task List</h1>
       </header>
       <main>
-        <div>{<TaskList 
-                tasks={tasks} 
-                onTaskClickCallback={toggleTaskComplete} 
-                onTaskDeleteCallback={deleteTask} />}
+        <div>{<TaskList
+          tasks={tasks}
+          onTaskClickCallback={toggleTaskComplete}
+          onTaskDeleteCallback={deleteTask} />}
         </div>
       </main>
     </div>
