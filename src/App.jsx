@@ -74,40 +74,54 @@ const App = () => {
   // Load tasks on mount
   // --------------------
   useEffect(() => {
-    console.log(getAllTasksAPI());
     getAllTasksAPI().then(tasksFromAPI => {
-      setTasks(tasksFromAPI);
+      // Add isComplete based on completed_at
+      const tasksWithIsComplete = tasksFromAPI.map(task => ({
+        ...task,
+        isComplete: task.completed_at !== null
+      }));
+      setTasks(tasksWithIsComplete);
+      // setTasks(tasksFromAPI);
     });
   }, []);
 
   // --------------------
   // Toggle completion
   // --------------------
+  // const toggleTaskComplete = (taskId) => {
+  //   const task = tasks.find(task => task.id === taskId);
+
+  //   const apiCall = task.isComplete
+  //     ? markIncompleteAPI
+  //     : markCompleteAPI;
+
+  //   return apiCall(taskId).then(() => {
+  //     setTasks(tasks =>
+  //       tasks.map(task =>
+  //         task.id === taskId
+  //           ? { ...task, isComplete: !task.isComplete }
+  //           : task
+  //       )
+  //     );
+  //   });
+  // };
   const toggleTaskComplete = (taskId) => {
+    setTasks(tasks =>
+      tasks.map(task =>
+        task.id === taskId
+          ? { ...task, isComplete: !task.isComplete }  // flip locally
+          : task
+      )
+    );
+
+  // Optional: call API to persist
     const task = tasks.find(task => task.id === taskId);
-    const apiCall = task.isComplete
-      ? markIncompleteAPI
-      : markCompleteAPI;
-      
-
-    return apiCall(taskId).then(() => {
-      return setTasks(tasks => {
-      
-        const newTask = tasks.map(task =>
-          task.id === taskId
-            ?
-            { ...task, isComplete: !task.isComplete } : task
-        )
-        console.log(newTask)
-      })
-     
-    })
-
-  }
-    
+    if (task.isComplete) {
+      markIncompleteAPI(taskId);
+    } else {
+      markCompleteAPI(taskId);
+    }
   };
-
-
   // --------------------
   // Delete task
   // --------------------
@@ -131,16 +145,14 @@ const App = () => {
         <h1>Ada&apos;s Task List</h1>
       </header>
       <main>
-        <div>{<TaskList
+        <div><TaskList
           tasks={tasks}
           onTaskClickCallback={toggleTaskComplete}
-          onTaskDeleteCallback={deleteTask} />}
+          onTaskDeleteCallback={deleteTask} />
           <NewTaskForm onSubmitTask={handleCreateTask} />
         </div>
       </main>
       </div>
       );
-
-
-
+    };
 export default App;

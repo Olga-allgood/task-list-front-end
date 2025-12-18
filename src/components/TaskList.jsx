@@ -5,16 +5,16 @@ import './TaskList.css';
 const TaskList = ({ tasks, onTaskClickCallback, onTaskDeleteCallback }) => {
   const getTaskListJSX = () => {
     return tasks.map((task) => (
-        <Task
-          key={task.id}
-          id={task.id}
-          title={task.title}
-          isComplete={task.completed_at !== null}
-          toggleTask={onTaskClickCallback}
-          deleteTask={onTaskDeleteCallback}
-        />
-      ));
-    };
+      <Task
+        key={task.id}
+        id={task.id}
+        title={task.title}
+        isComplete={task.isComplete} //using local isComplete
+        toggleTask={onTaskClickCallback}
+        deleteTask={onTaskDeleteCallback}
+      />
+    ));
+  };
   return <ul className="tasks__list no-bullet">{getTaskListJSX()}</ul>;
 };
 
@@ -24,7 +24,7 @@ TaskList.propTypes = {
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
       // isComplete: PropTypes.bool.isRequired,
-      completed_at: PropTypes.oneOfType([
+      isComplete: PropTypes.oneOfType([
         PropTypes.string,
         PropTypes.instanceOf(Date),
         PropTypes.null,]),
