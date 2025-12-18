@@ -9,7 +9,7 @@ const TaskList = ({ tasks, onTaskClickCallback, onTaskDeleteCallback }) => {
           key={task.id}
           id={task.id}
           title={task.title}
-          isComplete={task.isComplete}
+          isComplete={task.completed_at !== null}
           toggleTask={onTaskClickCallback}
           deleteTask={onTaskDeleteCallback}
         />
@@ -23,7 +23,11 @@ TaskList.propTypes = {
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       title: PropTypes.string.isRequired,
-      isComplete: PropTypes.bool.isRequired,
+      // isComplete: PropTypes.bool.isRequired,
+      completed_at: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.instanceOf(Date),
+        PropTypes.null,]),
     })
   ).isRequired,
   onTaskClickCallback: PropTypes.func.isRequired,

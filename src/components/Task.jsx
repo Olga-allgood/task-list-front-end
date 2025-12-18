@@ -6,7 +6,7 @@ import './Task.css';
 const Task = ({ id, title, isComplete, toggleTask, deleteTask }) => {
   // const [complete, setComplete] = useState(isComplete);
   const buttonClass = isComplete ? 'tasks__item__toggle--completed' : '';
-
+ 
   return (
     <li className="tasks__item">
       <button
